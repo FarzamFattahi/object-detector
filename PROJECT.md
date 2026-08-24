@@ -1,6 +1,6 @@
 # Project 2: Real-Time Object Detector
 
-**Status:** 🔲 Not started  
+**Status:** Not started  
 **Difficulty:** Beginner–Intermediate  
 **Estimated time:** 2–3 sessions  
 
