@@ -1,0 +1,10 @@
+{
+  "model": "yolo11n.pt",
+  "data": "coco8.yaml",
+  "image_size": 640,
+  "mAP50": 0.8152009983052958,
+  "mAP50_95": 0.6099892671950334,
+  "precision": 0.5735614324083813,
+  "recall": 0.85,
+  "note": "COCO8/COCO128 are smoke datasets from COCO train; not held-out accuracy."
+}
