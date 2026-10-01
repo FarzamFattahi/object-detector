@@ -1,40 +1,41 @@
-# Project 2: Real-Time Object Detector
+# Project 2: Object Detector
 
-**Status:** Not started  
-**Difficulty:** Beginner–Intermediate  
-**Estimated time:** 2–3 sessions  
-
----
+**Status:** Complete
+**Updated:** 1 October 2026
 
 ## Purpose
-Build a real-time object detection app using the latest YOLOv11 model. Detect and label objects in images, video files, and your webcam feed. This is one of the most in-demand CV skills in industry.
 
-## What You Will Learn
-- How convolutional neural networks (CNNs) work conceptually
-- What object detection is vs. classification vs. segmentation
-- Using a pretrained model for inference (no training needed yet)
-- ONNX Runtime for fast, framework-agnostic inference
-- How to draw bounding boxes, labels, and confidence scores
-- Real-time video processing with OpenCV
+Deploy pretrained YOLO11n for images, video and an explicitly opened local webcam.
+Learn PyTorch tensors, detection outputs, geometric preprocessing and ONNX deployment.
 
-## Key Technologies
-- **YOLOv11** (Ultralytics) — state-of-the-art detector
-- **ONNX Runtime** — production-grade inference engine
-- **OpenCV** — video capture and rendering
-- **Streamlit** — interactive demo UI
+## Completed
 
-## Steps
-- [ ] Step 1: Understand YOLO architecture (theory + visuals)
-- [ ] Step 2: Install Ultralytics, run first inference on an image
-- [ ] Step 3: Parse detection output (boxes, classes, scores)
-- [ ] Step 4: Draw annotated results on image
-- [ ] Step 5: Run on video file
-- [ ] Step 6: Run on live webcam feed
-- [ ] Step 7: Export model to ONNX, run via ONNX Runtime
-- [ ] Step 8: Build Streamlit demo (upload/webcam toggle)
-- [ ] Step 9: Polish, README, push to GitHub
+- [x] Package, validated configuration, CLI and Python API
+- [x] PyTorch inference and original-coordinate prediction records
+- [x] Annotations, image directories, video output and frame JSONL
+- [x] Local webcam CLI with Q/Ctrl+C cleanup
+- [x] FP32 static ONNX export
+- [x] Independent ONNX preprocessing, decoding and class-aware NMS
+- [x] Streamlit image/camera-snapshot/video dashboard and downloads
+- [x] Offline tests, packaging and Linux/Windows CI configuration
+- [x] Real outputs, latency chart, parity report and COCO8 smoke evaluation
+- [x] README, evidence provenance and practical learning guide
 
-## Progress Notes
+## Validation
 
-## GitHub Repo
-https://github.com/FarzamFattahi/cv-object-detector
+37 offline tests passed locally. Real-model checks matched all 32 detections between
+PyTorch and ONNX across two photos and four video frames. CPU median prediction
+latency: 79.6 ms PyTorch, 72.3 ms ONNX, with raw calls in `assets/results.json`.
+60 real video frames processed and encoded successfully. Both dashboard image engines
+and JSON download were exercised in the browser. A 30-frame dashboard video test
+produced a browser-decoded H.264 preview and frame records. Responsive page widths
+were checked at 375, 768, 1024 and 1440 pixels. Physical webcam and CUDA were not tested.
+
+## Repository
+
+[FarzamFattahi/object-detector](https://github.com/FarzamFattahi/object-detector)
+
+[Version 1.0.0](https://github.com/FarzamFattahi/object-detector/releases/tag/v1.0.0)
+
+Read [README.md](README.md), [learning guide](docs/LEARNING_GUIDE.md) and
+[selection audit](docs/PROJECT_SELECTION.md).

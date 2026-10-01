@@ -1,0 +1,2 @@
+# For a reproducible CPU install, install torch/torchvision first as shown in README.md.
+-e .
