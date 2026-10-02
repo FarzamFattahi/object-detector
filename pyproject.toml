@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "farzam-object-detector"
-version = "1.0.0"
+version = "1.1.0"
 description = "YOLO11 image, video and webcam detection with an independent ONNX Runtime backend"
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
@@ -15,6 +15,7 @@ dependencies = [
   "ultralytics==8.3.203", "torch>=2.2,<3", "torchvision>=0.17,<1",
   "onnxruntime>=1.20,<2", "onnx>=1.17,<1.20", "streamlit>=1.45,<2",
   "imageio-ffmpeg>=0.6,<1",
+  "PyYAML>=6,<7", "matplotlib>=3.8,<4",
 ]
 
 [project.optional-dependencies]
@@ -35,3 +36,8 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.isort]
+# Ultralytics writes a local settings directory whose capitalization differs by OS.
+known-third-party = ["ultralytics"]
+known-first-party = ["object_detector"]

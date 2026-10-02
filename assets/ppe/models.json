@@ -1,0 +1,14 @@
+{
+  "torch": {
+    "file": "ppe-yolo11n.pt",
+    "url": "https://github.com/FarzamFattahi/object-detector/releases/download/v1.1.0/ppe-yolo11n.pt",
+    "sha256": "af1b4a77d4f2610d1671a0970cafe4a75b95c227c031ca6ad692dd1ac712eb62",
+    "bytes": 5453530
+  },
+  "onnx": {
+    "file": "ppe-yolo11n.onnx",
+    "url": "https://github.com/FarzamFattahi/object-detector/releases/download/v1.1.0/ppe-yolo11n.onnx",
+    "sha256": "447f965af00d003c936503e228ebd8aefde83a4509565a53ff6c60301b6d3a12",
+    "bytes": 10572755
+  }
+}

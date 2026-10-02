@@ -1,0 +1,1416 @@
+{
+  "dataset": {
+    "splits": {
+      "test": {
+        "original_images": 141,
+        "images": 141,
+        "instances": [
+          192,
+          163,
+          178,
+          211,
+          52,
+          65,
+          236,
+          40,
+          33,
+          58,
+          23
+        ],
+        "similarity_groups": 131
+      },
+      "val": {
+        "original_images": 143,
+        "images": 129,
+        "instances": [
+          187,
+          108,
+          157,
+          127,
+          35,
+          81,
+          225,
+          45,
+          41,
+          56,
+          4
+        ],
+        "similarity_groups": 128
+      },
+      "train": {
+        "original_images": 1132,
+        "images": 967,
+        "instances": [
+          1176,
+          866,
+          1103,
+          980,
+          315,
+          644,
+          1606,
+          400,
+          337,
+          442,
+          88
+        ],
+        "similarity_groups": 923
+      }
+    },
+    "excluded": [
+      {
+        "image": "images/val/image1072.jpg",
+        "similarity_group": 146,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image1083.jpg",
+        "similarity_group": 147,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image1085.jpg",
+        "similarity_group": 147,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image1091.jpg",
+        "similarity_group": 12,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image1096.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image1107.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image1109.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image12.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image31.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image669.jpg",
+        "similarity_group": 108,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image885.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image933.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image942.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/val/image955.jpg",
+        "similarity_group": 135,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1001.jpg",
+        "similarity_group": 140,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1011.jpg",
+        "similarity_group": 141,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1012.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1013.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1015.jpg",
+        "similarity_group": 296,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1017.jpg",
+        "similarity_group": 296,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1018.jpg",
+        "similarity_group": 296,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image102.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1020.jpg",
+        "similarity_group": 296,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1021.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1022.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1025.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1026.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1027.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1028.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1029.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1030.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1038.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1047.jpg",
+        "similarity_group": 327,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1048.jpg",
+        "similarity_group": 327,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1050.jpg",
+        "similarity_group": 327,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1052.jpg",
+        "similarity_group": 327,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1053.jpg",
+        "similarity_group": 327,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1054.jpg",
+        "similarity_group": 327,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1056.jpg",
+        "similarity_group": 145,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1058.jpg",
+        "similarity_group": 145,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1059.jpg",
+        "similarity_group": 145,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1061.jpg",
+        "similarity_group": 145,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1062.jpg",
+        "similarity_group": 145,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1063.jpg",
+        "similarity_group": 9,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1073.jpg",
+        "similarity_group": 146,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1075.jpg",
+        "similarity_group": 146,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1077.jpg",
+        "similarity_group": 147,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1079.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1080.jpg",
+        "similarity_group": 147,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1081.jpg",
+        "similarity_group": 147,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1082.jpg",
+        "similarity_group": 147,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1084.jpg",
+        "similarity_group": 147,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1086.jpg",
+        "similarity_group": 147,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1087.jpg",
+        "similarity_group": 12,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1092.jpg",
+        "similarity_group": 12,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1095.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1097.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1098.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1099.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1101.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1102.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1103.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1104.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1106.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1108.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1112.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1113.jpg",
+        "similarity_group": 16,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image1115.jpg",
+        "similarity_group": 16,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image120.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image123.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image142.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image153.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image156.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image172.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image193.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image20.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image217.jpg",
+        "similarity_group": 209,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image24.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image247.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image268.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image279.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image290.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image301.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image33.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image332.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image36.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image364.jpg",
+        "similarity_group": 60,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image365.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image376.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image388.jpg",
+        "similarity_group": 137,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image397.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image408.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image42.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image420.jpg",
+        "similarity_group": 221,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image427.jpg",
+        "similarity_group": 370,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image429.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image45.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image47.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image492.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image503.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image504.jpg",
+        "similarity_group": 219,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image515.jpg",
+        "similarity_group": 12,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image52.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image54.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image56.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image564.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image59.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image61.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image66.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image673.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image68.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image681.jpg",
+        "similarity_group": 108,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image684.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image685.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image690.jpg",
+        "similarity_group": 108,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image693.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image699.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image7.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image702.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image71.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image712.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image713.jpg",
+        "similarity_group": 108,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image716.jpg",
+        "similarity_group": 105,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image724.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image725.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image73.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image730.jpg",
+        "similarity_group": 1126,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image76.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image77.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image78.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image79.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image80.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image81.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image82.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image83.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image833.jpg",
+        "similarity_group": 121,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image857.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image869.jpg",
+        "similarity_group": 271,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image877.jpg",
+        "similarity_group": 272,
+        "retained_split": "val",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image888.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image889.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image890.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image891.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image892.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image893.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image894.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image895.jpg",
+        "similarity_group": 7,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image90.jpg",
+        "similarity_group": 694,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image902.jpg",
+        "similarity_group": 1333,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image903.jpg",
+        "similarity_group": 1333,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image904.jpg",
+        "similarity_group": 1333,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image911.jpg",
+        "similarity_group": 126,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image912.jpg",
+        "similarity_group": 1378,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image918.jpg",
+        "similarity_group": 1378,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image928.jpg",
+        "similarity_group": 131,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image929.jpg",
+        "similarity_group": 131,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image936.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image937.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image938.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image941.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image944.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image945.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image946.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image947.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image948.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image949.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image952.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image953.jpg",
+        "similarity_group": 1369,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image954.jpg",
+        "similarity_group": 135,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image957.jpg",
+        "similarity_group": 1378,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image958.jpg",
+        "similarity_group": 1378,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image959.jpg",
+        "similarity_group": 1378,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image960.jpg",
+        "similarity_group": 1378,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image966.jpg",
+        "similarity_group": 1378,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image973.jpg",
+        "similarity_group": 1394,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image974.jpg",
+        "similarity_group": 1394,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image975.jpg",
+        "similarity_group": 1394,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image977.jpg",
+        "similarity_group": 1394,
+        "retained_split": "test",
+        "reason": "pHash group"
+      },
+      {
+        "image": "images/train/image978.jpg",
+        "similarity_group": 1394,
+        "retained_split": "test",
+        "reason": "pHash group"
+      }
+    ],
+    "source_url": "https://github.com/ultralytics/assets/releases/download/v0.0.0/construction-ppe.zip",
+    "similarity_policy": {
+      "method": "64-bit DCT pHash connected components",
+      "max_hamming_distance": 8,
+      "priority": [
+        "test",
+        "val",
+        "train"
+      ],
+      "limitation": "May miss related scenes or group unrelated images; no site IDs available. Related images within each retained split remain. This is not site-independent evaluation."
+    }
+  },
+  "split": "test",
+  "checkpoint_selection": "validation only",
+  "training_summary": {
+    "completed_epochs": 40,
+    "best_validation_epoch": 38,
+    "best_validation_mAP50": 0.54965,
+    "best_validation_mAP50_95": 0.27113,
+    "elapsed_seconds": 7131.49
+  },
+  "evaluation_environment": {
+    "measured_at_utc": "2026-10-02T16:31:45.904917+00:00",
+    "os": "Windows-11-10.0.26200-SP0",
+    "cpu": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "python": "3.12.14",
+    "packages": {
+      "torch": "2.8.0+cpu",
+      "ultralytics": "8.3.203",
+      "onnxruntime": "1.30.0",
+      "opencv-python": "4.14.0.94",
+      "numpy": "2.5.2"
+    }
+  },
+  "evaluation_source": {
+    "git_revision": "019c85cf594177f75030967ea9b7922f4201f29d",
+    "sha256": {
+      "scripts/evaluate_ppe.py": "a3c93d8a89ad9975e760a1f4083cde845dee26661f296314343c1cc443f4de55",
+      "src/object_detector/evaluation.py": "e1ceb0389ec9184e8bd35ef881d556a73f4e87edcc993a6de81d3f03394c456b",
+      "src/object_detector/backends.py": "fb77a6c699c737ab09f555d76521c20e21cad8edf27d661b6bc98b97f2648c95",
+      "src/object_detector/geometry.py": "24f9b5d779ace88519b80880d53aba512a22dea5c7e379202ae38ddb066d913f"
+    }
+  },
+  "evaluation_settings": {
+    "device": "cpu",
+    "image_size": 640,
+    "batch": 8,
+    "rect": false,
+    "half": false,
+    "confidence": 0.001,
+    "nms_iou": 0.7
+  },
+  "weights_sha256": "af1b4a77d4f2610d1671a0970cafe4a75b95c227c031ca6ad692dd1ac712eb62",
+  "mAP50": 0.5355238150823095,
+  "mAP50_95": 0.2722084081873974,
+  "precision": 0.5395253724181028,
+  "recall": 0.5375076196607892,
+  "metric_note": "Ultralytics precision/recall use its best-F1 operating point; AP uses conf .001, NMS IoU .7. Fixed .25 counts below are separate.",
+  "per_class": [
+    {
+      "class_id": 0,
+      "name": "helmet",
+      "instances": 192,
+      "precision": 0.8523415702886246,
+      "recall": 0.9114583333333334,
+      "mAP50": 0.9256281032878103,
+      "mAP50_95": 0.5055429033978748
+    },
+    {
+      "class_id": 1,
+      "name": "gloves",
+      "instances": 163,
+      "precision": 0.62675935911979,
+      "recall": 0.7300613496932515,
+      "mAP50": 0.7452817078680833,
+      "mAP50_95": 0.34981361267530386
+    },
+    {
+      "class_id": 2,
+      "name": "vest",
+      "instances": 178,
+      "precision": 0.7346659292812093,
+      "recall": 0.9044943820224719,
+      "mAP50": 0.8979787010892456,
+      "mAP50_95": 0.5693005590115962
+    },
+    {
+      "class_id": 3,
+      "name": "boots",
+      "instances": 211,
+      "precision": 0.5475732768810045,
+      "recall": 0.7203791469194313,
+      "mAP50": 0.7148259877033687,
+      "mAP50_95": 0.3756987917654935
+    },
+    {
+      "class_id": 4,
+      "name": "goggles",
+      "instances": 52,
+      "precision": 0.7008054935318244,
+      "recall": 0.75,
+      "mAP50": 0.753664558995466,
+      "mAP50_95": 0.3150478653835564
+    },
+    {
+      "class_id": 5,
+      "name": "none",
+      "instances": 65,
+      "precision": 0.4928146683821651,
+      "recall": 0.5230769230769231,
+      "mAP50": 0.4586067802164354,
+      "mAP50_95": 0.16557740270732882
+    },
+    {
+      "class_id": 6,
+      "name": "Person",
+      "instances": 236,
+      "precision": 0.7459183973926599,
+      "recall": 0.8305084745762712,
+      "mAP50": 0.8308984151390564,
+      "mAP50_95": 0.5209608530091837
+    },
+    {
+      "class_id": 7,
+      "name": "no_helmet",
+      "instances": 40,
+      "precision": 0.3129014712510736,
+      "recall": 0.2392837717422601,
+      "mAP50": 0.22840229037905946,
+      "mAP50_95": 0.09758396491460535
+    },
+    {
+      "class_id": 8,
+      "name": "no_goggle",
+      "instances": 33,
+      "precision": 0.29005252683514077,
+      "recall": 0.17363627748344912,
+      "mAP50": 0.1559754721464856,
+      "mAP50_95": 0.04640848767057436
+    },
+    {
+      "class_id": 9,
+      "name": "no_gloves",
+      "instances": 58,
+      "precision": 0.14424138498359165,
+      "recall": 0.08620689655172414,
+      "mAP50": 0.07540170468799973,
+      "mAP50_95": 0.02013184210134516
+    },
+    {
+      "class_id": 10,
+      "name": "no_boots",
+      "instances": 23,
+      "precision": 0.48670501865204807,
+      "recall": 0.043478260869565216,
+      "mAP50": 0.10409824439239368,
+      "mAP50_95": 0.02822620742450868
+    }
+  ],
+  "person_baseline": {
+    "model": "COCO-pretrained YOLO11n",
+    "class": "Person only",
+    "images": 141,
+    "mAP50": 0.7191664719086315,
+    "mAP50_95": 0.30105607528144634,
+    "note": "COCO person class 0 compared against PPE Person class 6 on identical test images. Other categories excluded; this is not an 11-class baseline."
+  },
+  "semantic_groups": {
+    "worn_equipment": {
+      "classes": [
+        "helmet",
+        "gloves",
+        "vest",
+        "boots",
+        "goggles"
+      ],
+      "instances": 796,
+      "mAP50": 0.8074758117887948,
+      "mAP50_95": 0.42308074644676485,
+      "note": "Unweighted mean of the same per-class AP values; descriptive subset, not a separately selected or trained model."
+    },
+    "missing_equipment": {
+      "classes": [
+        "no_helmet",
+        "no_goggle",
+        "no_gloves",
+        "no_boots"
+      ],
+      "instances": 154,
+      "mAP50": 0.14096942790148462,
+      "mAP50_95": 0.04808762552775839,
+      "note": "Unweighted mean of the same per-class AP values; descriptive subset, not a separately selected or trained model."
+    }
+  },
+  "fixed_operating_point": {
+    "confidence": 0.25,
+    "nms_iou": 0.45,
+    "match_iou": 0.5,
+    "tp": 849,
+    "fp": 185,
+    "fn": 402,
+    "per_class": [
+      {
+        "class_id": 0,
+        "name": "helmet",
+        "tp": 172,
+        "fp": 10,
+        "fn": 20
+      },
+      {
+        "class_id": 1,
+        "name": "gloves",
+        "tp": 116,
+        "fp": 31,
+        "fn": 47
+      },
+      {
+        "class_id": 2,
+        "name": "vest",
+        "tp": 152,
+        "fp": 25,
+        "fn": 26
+      },
+      {
+        "class_id": 3,
+        "name": "boots",
+        "tp": 145,
+        "fp": 52,
+        "fn": 66
+      },
+      {
+        "class_id": 4,
+        "name": "goggles",
+        "tp": 35,
+        "fp": 6,
+        "fn": 17
+      },
+      {
+        "class_id": 5,
+        "name": "none",
+        "tp": 32,
+        "fp": 11,
+        "fn": 33
+      },
+      {
+        "class_id": 6,
+        "name": "Person",
+        "tp": 192,
+        "fp": 36,
+        "fn": 44
+      },
+      {
+        "class_id": 7,
+        "name": "no_helmet",
+        "tp": 4,
+        "fp": 3,
+        "fn": 36
+      },
+      {
+        "class_id": 8,
+        "name": "no_goggle",
+        "tp": 0,
+        "fp": 1,
+        "fn": 33
+      },
+      {
+        "class_id": 9,
+        "name": "no_gloves",
+        "tp": 1,
+        "fp": 10,
+        "fn": 57
+      },
+      {
+        "class_id": 10,
+        "name": "no_boots",
+        "tp": 0,
+        "fp": 0,
+        "fn": 23
+      }
+    ]
+  }
+}

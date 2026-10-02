@@ -1,0 +1,276 @@
+{
+  "resolution": 640,
+  "size_definition": "sqrt(box area) after aspect-preserving resize to fit 640x640; small <=32 px, medium <=96 px, large >96 px",
+  "splits": {
+    "train": [
+      {
+        "name": "helmet",
+        "instances": 1176,
+        "median_equivalent_side_px": 68.40600967407227,
+        "small": 143,
+        "medium": 753,
+        "large": 280
+      },
+      {
+        "name": "gloves",
+        "instances": 866,
+        "median_equivalent_side_px": 53.25156211853027,
+        "small": 69,
+        "medium": 743,
+        "large": 54
+      },
+      {
+        "name": "vest",
+        "instances": 1103,
+        "median_equivalent_side_px": 159.8966522216797,
+        "small": 16,
+        "medium": 244,
+        "large": 843
+      },
+      {
+        "name": "boots",
+        "instances": 980,
+        "median_equivalent_side_px": 69.67974090576172,
+        "small": 73,
+        "medium": 604,
+        "large": 303
+      },
+      {
+        "name": "goggles",
+        "instances": 315,
+        "median_equivalent_side_px": 51.450138092041016,
+        "small": 26,
+        "medium": 284,
+        "large": 5
+      },
+      {
+        "name": "none",
+        "instances": 644,
+        "median_equivalent_side_px": 127.50442123413086,
+        "small": 37,
+        "medium": 185,
+        "large": 422
+      },
+      {
+        "name": "Person",
+        "instances": 1606,
+        "median_equivalent_side_px": 274.26063537597656,
+        "small": 1,
+        "medium": 112,
+        "large": 1493
+      },
+      {
+        "name": "no_helmet",
+        "instances": 400,
+        "median_equivalent_side_px": 72.3702278137207,
+        "small": 27,
+        "medium": 257,
+        "large": 116
+      },
+      {
+        "name": "no_goggle",
+        "instances": 337,
+        "median_equivalent_side_px": 38.89341735839844,
+        "small": 131,
+        "medium": 205,
+        "large": 1
+      },
+      {
+        "name": "no_gloves",
+        "instances": 442,
+        "median_equivalent_side_px": 53.66462516784668,
+        "small": 55,
+        "medium": 344,
+        "large": 43
+      },
+      {
+        "name": "no_boots",
+        "instances": 88,
+        "median_equivalent_side_px": 45.33019256591797,
+        "small": 11,
+        "medium": 77,
+        "large": 0
+      }
+    ],
+    "val": [
+      {
+        "name": "helmet",
+        "instances": 187,
+        "median_equivalent_side_px": 66.08794403076172,
+        "small": 26,
+        "medium": 123,
+        "large": 38
+      },
+      {
+        "name": "gloves",
+        "instances": 108,
+        "median_equivalent_side_px": 51.556936264038086,
+        "small": 5,
+        "medium": 102,
+        "large": 1
+      },
+      {
+        "name": "vest",
+        "instances": 157,
+        "median_equivalent_side_px": 160.77322387695312,
+        "small": 0,
+        "medium": 45,
+        "large": 112
+      },
+      {
+        "name": "boots",
+        "instances": 127,
+        "median_equivalent_side_px": 69.05017852783203,
+        "small": 4,
+        "medium": 88,
+        "large": 35
+      },
+      {
+        "name": "goggles",
+        "instances": 35,
+        "median_equivalent_side_px": 55.20716094970703,
+        "small": 0,
+        "medium": 35,
+        "large": 0
+      },
+      {
+        "name": "none",
+        "instances": 81,
+        "median_equivalent_side_px": 136.8860321044922,
+        "small": 1,
+        "medium": 23,
+        "large": 57
+      },
+      {
+        "name": "Person",
+        "instances": 225,
+        "median_equivalent_side_px": 269.52374267578125,
+        "small": 0,
+        "medium": 16,
+        "large": 209
+      },
+      {
+        "name": "no_helmet",
+        "instances": 45,
+        "median_equivalent_side_px": 83.44219207763672,
+        "small": 1,
+        "medium": 28,
+        "large": 16
+      },
+      {
+        "name": "no_goggle",
+        "instances": 41,
+        "median_equivalent_side_px": 39.92583465576172,
+        "small": 12,
+        "medium": 29,
+        "large": 0
+      },
+      {
+        "name": "no_gloves",
+        "instances": 56,
+        "median_equivalent_side_px": 56.350181579589844,
+        "small": 2,
+        "medium": 51,
+        "large": 3
+      },
+      {
+        "name": "no_boots",
+        "instances": 4,
+        "median_equivalent_side_px": 55.281455993652344,
+        "small": 0,
+        "medium": 4,
+        "large": 0
+      }
+    ],
+    "test": [
+      {
+        "name": "helmet",
+        "instances": 192,
+        "median_equivalent_side_px": 67.1278305053711,
+        "small": 9,
+        "medium": 149,
+        "large": 34
+      },
+      {
+        "name": "gloves",
+        "instances": 163,
+        "median_equivalent_side_px": 48.606895446777344,
+        "small": 21,
+        "medium": 139,
+        "large": 3
+      },
+      {
+        "name": "vest",
+        "instances": 178,
+        "median_equivalent_side_px": 157.51422882080078,
+        "small": 0,
+        "medium": 33,
+        "large": 145
+      },
+      {
+        "name": "boots",
+        "instances": 211,
+        "median_equivalent_side_px": 65.08161926269531,
+        "small": 2,
+        "medium": 157,
+        "large": 52
+      },
+      {
+        "name": "goggles",
+        "instances": 52,
+        "median_equivalent_side_px": 51.450138092041016,
+        "small": 3,
+        "medium": 48,
+        "large": 1
+      },
+      {
+        "name": "none",
+        "instances": 65,
+        "median_equivalent_side_px": 135.9339599609375,
+        "small": 3,
+        "medium": 24,
+        "large": 38
+      },
+      {
+        "name": "Person",
+        "instances": 236,
+        "median_equivalent_side_px": 280.96788024902344,
+        "small": 3,
+        "medium": 2,
+        "large": 231
+      },
+      {
+        "name": "no_helmet",
+        "instances": 40,
+        "median_equivalent_side_px": 79.55159378051758,
+        "small": 3,
+        "medium": 26,
+        "large": 11
+      },
+      {
+        "name": "no_goggle",
+        "instances": 33,
+        "median_equivalent_side_px": 46.052284240722656,
+        "small": 4,
+        "medium": 29,
+        "large": 0
+      },
+      {
+        "name": "no_gloves",
+        "instances": 58,
+        "median_equivalent_side_px": 54.74989700317383,
+        "small": 12,
+        "medium": 44,
+        "large": 2
+      },
+      {
+        "name": "no_boots",
+        "instances": 23,
+        "median_equivalent_side_px": 44.14384460449219,
+        "small": 10,
+        "medium": 13,
+        "large": 0
+      }
+    ]
+  }
+}

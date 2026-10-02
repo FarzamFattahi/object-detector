@@ -4,15 +4,47 @@
 ![Python 3.10–3.13](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)
 ![License AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue)
 
-Detect objects in images, videos and a local webcam with pretrained **YOLO11n**.
+Detect objects in images, videos and a local webcam with **YOLO11n**, including a
+fine-tuned **Construction-PPE** model for eleven equipment/person label categories.
 Inspect results in a Streamlit dashboard or use the CLI in a data pipeline. Deploy the
 same model through an **independent ONNX Runtime backend** with explicit preprocessing,
 decoding and class-aware NMS.
 
-This is an inference/deployment engineering project by **Farzam Fattahi**. The model
-weights are supplied by Ultralytics; no new model training is claimed.
+Built by **Farzam Fattahi**: dataset validation, similarity-based leakage filtering,
+transfer learning, held-out evaluation, error analysis and deployment. The general
+COCO model uses upstream weights; the PPE checkpoint is fine-tuned from those weights.
 
-![Real inputs and actual detected objects](assets/detections.jpg)
+## Construction-PPE case study
+
+The upstream 1,416-image dataset contains related frames across its original splits.
+Our reproducible pHash grouping excludes 165 training and 14 validation images before
+fine-tuning, leaving **967 train / 129 validation / 141 test** images. The checkpoint
+is selected on validation only. This is image-level evaluation with heuristic
+similarity filtering; it does not establish generalization to unseen sites.
+
+| Held-out test categories | mAP50 | mAP50–95 |
+|---|---:|---:|
+| All 11 (primary result) | 0.536 | 0.272 |
+| Five worn-equipment classes | 0.807 | 0.423 |
+| Four missing-equipment labels | 0.141 | 0.048 |
+
+These are measured on 141 held-out images. Subsets summarize the same model;
+missing-equipment labels remain weak and do not establish worker compliance.
+See the [model card with every class result and baseline](docs/PPE_MODEL_CARD.md).
+
+![Dataset annotations beside actual predictions: selected strong test case](assets/ppe/test_preview.jpg)
+
+Read the [complete experiment and PyTorch training explanation](docs/PPE_CASE_STUDY.md)
+for the recipe, measured per-class results, learning curves, and strong/typical/weak
+test predictions. The evidence includes every test prediction, annotation support,
+dataset provenance and checkpoint hashes.
+
+```powershell
+# After installing the project below:
+python scripts/download_ppe_model.py
+cv-detect detect --source assets/ppe/samples/test-1.jpg --model models/ppe-yolo11n.onnx --backend onnx
+streamlit run app.py  # select Construction PPE
+```
 
 ## Try it
 
@@ -25,6 +57,7 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install torch==2.8.0 torchvision==0.23.0 --index-url https://download.pytorch.org/whl/cpu
 python -m pip install -r requirements.txt
+python scripts/download_ppe_model.py
 python scripts/download_samples.py --video
 streamlit run app.py
 ```
@@ -46,12 +79,14 @@ python -m pip install -e . --no-deps
 The lock snapshot is specific to the measured environment; use `requirements.txt`
 for dependency resolution on other Python versions/platforms. GPU use requires a
 CUDA-compatible PyTorch installation from the [official installer](https://pytorch.org/get-started/locally/).
-GPU performance is not measured in this release.
+The original COCO CPU measurements below remain from v1.0.0. The PPE experiment
+records its own training/evaluation environment separately.
 
 ## Features
 
 - Image, nonrecursive image-directory, recorded-video and live local webcam detection.
 - Pretrained 80-class COCO model; confidence, IoU and class filters.
+- Fine-tuned 11-class Construction-PPE model, audited dataset manifests and test evidence.
 - Typed prediction API with rectangles in original-image pixel coordinates.
 - Annotated PNG + JSON for each image; video + one JSONL record per frame.
 - Static FP32 ONNX export and independent CPU inference with NumPy/OpenCV postprocessing.
@@ -113,7 +148,7 @@ ONNX expects our static batch-one FP32 YOLO11 detection export, without embedded
 and with class-name metadata. Use the same `--image-size` as the export.
 Unsupported layouts fail with descriptive errors.
 
-## Measured performance
+## General COCO model: v1.0 CPU measurements
 
 Local Windows CPU run, **AMD Ryzen 7 7435HS**, Python 3.12, YOLO11n FP32,
 640×640 input, batch one, four CPU threads. Two photos alternated over
@@ -176,9 +211,13 @@ src/object_detector/
   media.py        Image I/O and streaming video/JSONL
   benchmark.py    Warmed timing and one-to-one parity
   cli.py          Detection, export, benchmark and evaluation
+  ppe_dataset.py  Label validation, exact hashes and perceptual similarity grouping
+  evaluation.py   One-to-one operating-point TP/FP/FN matching
+  download.py     Resumable, length-checked and hash-verified downloads
 app.py            Streamlit dashboard
 tests/            Offline geometry, decoding, I/O and error-path tests
-scripts/          Sample download and evidence generation
+scripts/          Download, dataset audit, fine-tuning, evaluation and evidence generation
+configs/          Fixed PPE training recipe
 ```
 
 Read the [learning guide](docs/LEARNING_GUIDE.md) for PyTorch fundamentals, the
@@ -202,11 +241,15 @@ after inference failures. Real-model evidence is reproduced separately.
 ## Limits and credits
 
 Small, occluded and out-of-domain objects can be missed. Scores are not calibrated
-probabilities. There is no retraining pipeline, tracking, audio preservation or REST
-API in this release. Physical webcam and CUDA behavior were not verified.
+probabilities. There is no tracking, audio preservation or REST API in this release.
+Physical webcam behavior was not verified. Construction-PPE labels are predictions,
+not verified worker compliance; missing detections do not establish missing equipment.
+See the case study for rare labels, related scenes and evaluation limitations.
 Camera snapshots use the browser camera; continuous webcam uses the explicit CLI.
 
 Code is **AGPL-3.0-only**, matching the Ultralytics dependency/model license; see
 [LICENSE](LICENSE) and [upstream YOLO11 docs](https://docs.ultralytics.com/models/yolo11/).
 Pretrained weights/demo inputs are credited in [evidence sources](assets/SOURCES.md).
+Construction-PPE dataset authors and the included sample images are credited in the
+[case study](docs/PPE_CASE_STUDY.md) and `assets/ppe/sample_sources.json`.
 The input photographs/video are third-party material; their rights remain with their sources.

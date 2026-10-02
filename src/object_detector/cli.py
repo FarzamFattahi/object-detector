@@ -18,7 +18,9 @@ def add_settings(parser):
     parser.add_argument("--image-size", type=int, default=640)
     parser.add_argument("--confidence", type=float, default=0.25)
     parser.add_argument("--iou", type=float, default=0.45)
-    parser.add_argument("--classes", type=int, nargs="+", help="COCO IDs, e.g. 0 2 for person/car")
+    parser.add_argument(
+        "--classes", type=int, nargs="+", help="IDs from the selected model's labels"
+    )
     parser.add_argument("--max-detections", type=int, default=300)
     parser.add_argument("--threads", type=int, default=4)
 
@@ -45,6 +47,7 @@ def build_parser():
     evaluate = commands.add_parser("evaluate", help="Ultralytics mAP evaluation on a dataset YAML")
     evaluate.add_argument("--model", default="yolo11n.pt")
     evaluate.add_argument("--data", default="coco8.yaml")
+    evaluate.add_argument("--split", choices=["train", "val", "test"], default="val")
     evaluate.add_argument("--device", default="cpu")
     evaluate.add_argument("--image-size", type=int, default=640)
     evaluate.add_argument("--output", type=Path, default=Path("outputs/evaluation"))
@@ -91,6 +94,7 @@ def run(args):
         DetectorConfig(image_size=args.image_size)
         metrics = YOLO(args.model, task="detect").val(
             data=args.data,
+            split=args.split,
             imgsz=args.image_size,
             device=args.device,
             batch=1,
@@ -103,12 +107,14 @@ def run(args):
         report = {
             "model": args.model,
             "data": args.data,
+            "split": args.split,
             "image_size": args.image_size,
             "mAP50": float(metrics.box.map50),
             "mAP50_95": float(metrics.box.map),
             "precision": float(metrics.box.mp),
             "recall": float(metrics.box.mr),
-            "note": "COCO8/COCO128 are smoke datasets from COCO train; not held-out accuracy.",
+            "note": "Interpret accuracy using the dataset split and provenance. "
+            "COCO8/COCO128 are smoke datasets from COCO train, not held-out accuracy.",
         }
         args.output.mkdir(parents=True, exist_ok=True)
         (args.output / "metrics.json").write_text(json.dumps(report, indent=2), encoding="utf-8")

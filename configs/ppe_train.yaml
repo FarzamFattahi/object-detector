@@ -1,0 +1,16 @@
+# Fixed before evaluating the test split. Ultralytics 8.3.203 / PyTorch 2.8.0.
+epochs: 40
+imgsz: 640
+batch: 4
+workers: 2
+seed: 42
+deterministic: true
+optimizer: AdamW
+lr0: 0.001
+lrf: 0.01
+weight_decay: 0.0005
+patience: 12
+close_mosaic: 10
+amp: true
+cache: false
+plots: true
