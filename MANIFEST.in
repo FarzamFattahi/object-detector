@@ -2,5 +2,5 @@ include app.py requirements.txt PROJECT.md
 recursive-include .streamlit *.toml
 recursive-include scripts *.py
 recursive-include docs *.md
-recursive-include assets *.jpg *.png *.gif *.json *.md *.csv
+recursive-include assets *.jpg *.png *.gif *.json *.md *.csv *.yaml
 recursive-include configs *.yaml

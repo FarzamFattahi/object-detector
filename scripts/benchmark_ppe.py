@@ -1,6 +1,7 @@
 """Measure PPE deployment latency and independent ONNX agreement on real test inputs."""
 
 import argparse
+import hashlib
 import json
 from dataclasses import replace
 from pathlib import Path
@@ -36,6 +37,18 @@ def main():
     report = {
         "environment": environment(),
         "selection": "First 20 sorted test filenames",
+        "inputs": [
+            {
+                "image": path.name,
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                "shape": list(image.shape),
+            }
+            for path, image in zip(paths, images, strict=True)
+        ],
+        "model_sha256": {
+            suffix: hashlib.sha256((ROOT / f"models/ppe-yolo11n.{suffix}").read_bytes()).hexdigest()
+            for suffix in ("pt", "onnx")
+        },
         "parity": parity,
         "torch": benchmark(torch_detector, images, repeats=40, warmup=5),
         "onnx_cpu": benchmark(onnx_detector, images, repeats=40, warmup=5),
@@ -43,6 +56,7 @@ def main():
     # Keep published paths portable.
     report["torch"]["config"]["model"] = "models/ppe-yolo11n.pt"
     report["onnx_cpu"]["config"]["model"] = "models/ppe-yolo11n.onnx"
+    args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2), encoding="utf-8")
     if not all(row["all_matched"] for row in parity):
         raise RuntimeError("Backend differences found; inspect the published parity report")

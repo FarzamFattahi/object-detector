@@ -70,11 +70,12 @@ $env:YOLO_CONFIG_DIR = (Get-Location).Path
 python scripts/prepare_ppe.py
 python scripts/analyze_ppe.py
 python scripts/train_ppe.py --device 0
-python scripts/evaluate_ppe.py --device 0
+python scripts/evaluate_ppe.py --device cpu
 ```
 
 CPU training is supported explicitly with `--device cpu` but takes substantially
-longer. The fixed recipe is in `configs/ppe_train.yaml`: COCO-pretrained YOLO11n,
+longer. Evaluation defaults to FP32 CPU and also accepts `--device 0`. The fixed
+recipe is in `configs/ppe_train.yaml`: COCO-pretrained YOLO11n,
 640 px, microbatch 4, two data-loader workers, AdamW, 40 maximum epochs, seed 42 and
 early stopping patience 12. Ultralytics accumulates gradients toward its default
 nominal batch size of 64. Runtime probes with microbatch 8 were stopped due to
@@ -102,6 +103,14 @@ flowchart LR
 
 ## Understand the learning process
 
+Each label row is `class_id x_center y_center width height`, with the four
+coordinates normalized to the image dimensions. For an image of width W, a box's
+left edge is `(x_center - width / 2) * W`; the same conversion gives the right
+edge and the two vertical edges. Training uses these targets to supervise the
+detector. They differ from the original-pixel `xyxy` boxes returned by our API.
+The dataset YAML fixes the class order, which must also agree with the model's
+metadata and the dashboard filters.
+
 A pretrained detector already has useful edges, textures and shape features.
 Fine-tuning replaces/adapts its 80-class detection head to 11 dataset classes and
 updates the backbone as well. This is transfer learning, not training a new
@@ -123,6 +132,49 @@ and the [Ultralytics training guide](https://docs.ultralytics.com/modes/train/).
 The experiment pins Ultralytics 8.3.203 and PyTorch 2.8.0 rather than relying on
 the changing defaults of newer releases.
 
+One distinction to remember: `YOLO.train(...)` starts Ultralytics' training loop.
+PyTorch's underlying `torch.nn.Module.train()` only switches layer behavior; it
+does not load data or update weights. For inference, `.eval()` controls layers
+such as BatchNorm, while `torch.no_grad()` disables gradient recording.
+
+After downloading the released PPE model, inspect its tensors on a real example:
+
+```python
+import torch
+from ultralytics import YOLO
+from object_detector.geometry import letterbox
+from object_detector.media import read_image
+
+image = read_image("assets/ppe/samples/test-1.jpg")  # HWC, BGR, uint8
+padded, scale, padding = letterbox(image, 640)
+rgb = padded[:, :, ::-1].copy()  # positive strides for torch.from_numpy
+batch = torch.from_numpy(rgb).permute(2, 0, 1).float().div(255).unsqueeze(0)
+network = YOLO("models/ppe-yolo11n.pt").model.eval()
+with torch.no_grad():
+    decoded, raw_scales = network(batch)
+print(batch.shape)  # [1, 3, 640, 640]
+print(decoded.shape)  # [1, 15, 8400]: xywh + eleven class scores
+```
+
+The 8,400 locations come from 80×80, 40×40 and 20×20 feature grids. These tensors
+precede confidence filtering and NMS. Read `backends.py` to see the independent
+NumPy implementation turn the same exported predictions into original-image boxes.
+
+To deploy your own completed training run instead of downloading the release:
+
+```powershell
+New-Item -ItemType Directory -Force models
+Copy-Item runs/ppe-yolo11n/weights/best.pt models/ppe-yolo11n.pt
+cv-detect export --model models/ppe-yolo11n.pt --output models/ppe-yolo11n.onnx
+python scripts/benchmark_ppe.py
+```
+
+The benchmark measures batch-one prediction on twenty specified test images, with
+five warmups and forty timed calls per backend. It checks same-class, one-to-one
+box agreement at IoU ≥0.99 and records confidence/coordinate differences. Backend
+agreement establishes export correctness, not annotation accuracy. Input/model
+hashes, raw timings and runtime versions are in `assets/ppe/deployment.json`.
+
 ## Evaluation and evidence
 
 `assets/ppe/metrics.json` is the authoritative measured report. It contains test
@@ -137,7 +189,18 @@ confidence order, each annotation at most once. Duplicate predictions count as
 false positives. The gallery deliberately includes two strong, two median and
 two weak images ranked by equipment F1, excluding `Person` and ambiguous `none`
 from that ranking. It is illustrative selection, not a random performance sample.
+Ranking requires at least one annotated equipment box, so an image with no
+equipment annotations and no equipment predictions is not mislabeled as a weak
+case just because F1 is undefined there.
 All test predictions are published so that selection can be inspected.
+
+The report also separates the five worn-equipment categories (helmet, gloves,
+vest, boots, goggles) from the four missing-equipment labels. These semantic
+groups were specified after validation diagnostics and before test evaluation.
+Their scores are simple means of the same per-class AP values; the model is
+selected using all eleven classes. The full score and every class result remain
+visible. Precision of 1 with recall of 0 at an operating point means the model
+made no positive detections there, not that the class works perfectly.
 
 The original COCO model shares only the `Person` category with this dataset. A
 restricted baseline evaluates its person predictions against the same 236 test
@@ -163,3 +226,19 @@ Select **Construction PPE** in the dashboard. Its class IDs differ from COCO:
 the GitHub release with pinned SHA-256 verification. The independent ONNX decoder
 reads class names from model metadata, so its raw output changes from 84 to 15
 channels (four box coordinates plus eleven class scores).
+
+## Learn by inspecting this experiment
+
+1. Open `assets/ppe/data_audit.json` and find an excluded training image. Trace its
+   similarity group to the higher-priority split; explain why it cannot stay in
+   training under this policy.
+2. Run the tensor example above. Inspect `raw_scales` and connect its spatial
+   dimensions to the three feature grids. These outputs are predictions before NMS.
+3. Compare `training.csv` with `learning_curves.png`. Find the epoch with the best
+   validation mAP50–95; explain why the lowest training loss need not select it.
+4. In the dashboard, try the weak example with dataset annotations visible. List
+   missed boxes, incorrect classes and duplicate detections separately. Lowering
+   confidence may recover boxes while also introducing false positives.
+5. Read the Person baseline and the full eleven-class report. Explain why a
+   comparison on one shared category cannot establish an improvement on all PPE
+   categories, and why deployment parity cannot establish detection accuracy.

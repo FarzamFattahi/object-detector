@@ -12,6 +12,7 @@ import cv2
 import matplotlib
 import numpy as np
 import torch
+import yaml
 from PIL import Image, ImageDraw, ImageFont
 from ultralytics import YOLO
 
@@ -20,6 +21,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 from object_detector import Detector, DetectorConfig  # noqa: E402
 from object_detector.annotation import annotate  # noqa: E402
+from object_detector.benchmark import environment  # noqa: E402
 from object_detector.evaluation import match_boxes  # noqa: E402
 from object_detector.media import read_image  # noqa: E402
 from object_detector.ppe_dataset import NAMES, read_labels  # noqa: E402
@@ -53,7 +55,8 @@ def font(size):
 
 def gallery(records, destination):
     # Selection is disclosed: strongest, median and weakest equipment F1, two each.
-    ranked = sorted(records, key=lambda r: (r["equipment"]["f1"], r["image"]))
+    eligible = [r for r in records if r["equipment"]["tp"] + r["equipment"]["fn"] > 0]
+    ranked = sorted(eligible, key=lambda r: (r["equipment"]["f1"], r["image"]))
     chosen = ranked[-2:] + ranked[len(ranked) // 2 - 1 : len(ranked) // 2 + 1] + ranked[:2]
     canvas = Image.new("RGB", (1440, 6 * 410 + 130), "#0f172a")
     draw = ImageDraw.Draw(canvas)
@@ -93,6 +96,7 @@ def gallery(records, destination):
         draw.text(
             (30, top + 365),
             f"{['STRONG', 'STRONG', 'MEDIAN', 'MEDIAN', 'WEAK', 'WEAK'][index]}"
+            f" / {record['image']}"
             f" / equipment TP {score['tp']} · FP {score['fp']} · FN {score['fn']}"
             f" · F1 {score['f1']:.2f}",
             font=font(18),
@@ -109,10 +113,12 @@ def gallery(records, destination):
                 "sample": sample.name,
                 "dataset_image": record["image"],
                 "sha256": hashlib.sha256(sample.read_bytes()).hexdigest(),
-                "selection": "equipment F1 excludes Person and ambiguous none",
+                "selection": "equipment F1 excludes Person and ambiguous none; "
+                "images must have annotated equipment",
             }
         )
     canvas.save(destination, quality=90)
+    canvas.crop((0, 0, 1440, 540)).save(destination.parent / "test_preview.jpg", quality=92)
     (destination.parent / "sample_sources.json").write_text(
         json.dumps(sources, indent=2), encoding="utf-8"
     )
@@ -159,8 +165,6 @@ def charts(report, run, output):
 
 def person_baseline(data, device):
     """Compare the common Person class; COCO has no matching PPE categories."""
-    import yaml
-
     root = ROOT / "data/ppe-person-baseline"
     images, labels = root / "images/test", root / "labels/test"
     images.mkdir(parents=True, exist_ok=True)
@@ -229,7 +233,7 @@ def main():
     parser.add_argument("--run", type=Path, default=ROOT / "runs/ppe-yolo11n")
     parser.add_argument("--data", type=Path, default=ROOT / "data/ppe-audited/data.yaml")
     parser.add_argument("--output", type=Path, default=ROOT / "assets/ppe")
-    parser.add_argument("--device", default="0")
+    parser.add_argument("--device", default="cpu")
     args = parser.parse_args()
     output = args.output
     output.mkdir(parents=True, exist_ok=True)
@@ -251,6 +255,12 @@ def main():
         exist_ok=True,
     )
     audit = json.loads((args.data.parent / "audit.json").read_text(encoding="utf-8"))
+    with (args.run / "results.csv").open(encoding="utf-8") as file:
+        training = [
+            {key.strip(): float(value) for key, value in row.items()}
+            for row in csv.DictReader(file)
+        ]
+    best_epoch = max(training, key=lambda row: row["metrics/mAP50-95(B)"])
     # Store portable evidence without absolute workstation paths.
     summary = {
         s: {k: v for k, v in r.items() if k != "records"} for s, r in audit["splits"].items()
@@ -264,6 +274,23 @@ def main():
         },
         "split": "test",
         "checkpoint_selection": "validation only",
+        "training_summary": {
+            "completed_epochs": len(training),
+            "best_validation_epoch": int(best_epoch["epoch"]),
+            "best_validation_mAP50": best_epoch["metrics/mAP50(B)"],
+            "best_validation_mAP50_95": best_epoch["metrics/mAP50-95(B)"],
+            "elapsed_seconds": training[-1]["time"],
+        },
+        "evaluation_environment": environment(),
+        "evaluation_settings": {
+            "device": args.device,
+            "image_size": 640,
+            "batch": 8,
+            "rect": False,
+            "half": False,
+            "confidence": 0.001,
+            "nms_iou": 0.7,
+        },
         "weights_sha256": hashlib.sha256(weights.read_bytes()).hexdigest(),
         "mAP50": float(metrics.box.map50),
         "mAP50_95": float(metrics.box.map),
@@ -287,6 +314,17 @@ def main():
             }
         )
     report["person_baseline"] = person_baseline(args.data, args.device)
+    report["semantic_groups"] = {}
+    for group_name, ids in (("worn_equipment", range(5)), ("missing_equipment", range(7, 11))):
+        rows = [row for row in report["per_class"] if row["class_id"] in ids]
+        report["semantic_groups"][group_name] = {
+            "classes": [row["name"] for row in rows],
+            "instances": sum(row["instances"] for row in rows),
+            "mAP50": float(np.mean([row["mAP50"] for row in rows])),
+            "mAP50_95": float(np.mean([row["mAP50_95"] for row in rows])),
+            "note": "Unweighted mean of the same per-class AP values; descriptive subset, "
+            "not a separately selected or trained model.",
+        }
     detector = Detector(
         DetectorConfig(model=str(weights), device=args.device, confidence=0.25, iou=0.45)
     )
@@ -323,6 +361,12 @@ def main():
     (output / "test_predictions.json").write_text(json.dumps(records, indent=2), encoding="utf-8")
     (output / "metrics.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     shutil.copy2(args.run / "experiment.json", output / "experiment.json")
+    resolved = yaml.safe_load((args.run / "args.yaml").read_text(encoding="utf-8"))
+    resolved.update(model="yolo11n.pt", data="data/ppe-audited/data.yaml", project="runs")
+    resolved.pop("save_dir", None)
+    (output / "resolved_train_args.yaml").write_text(
+        yaml.safe_dump(resolved, sort_keys=False), encoding="utf-8"
+    )
     shutil.copy2(args.run / "results.csv", output / "training.csv")
     shutil.copy2(ROOT / "data/ppe-download.json", output / "download.json")
     shutil.copy2(args.data.parent / "audit.json", output / "data_audit.json")

@@ -58,7 +58,7 @@ st.write(
 
 with st.sidebar:
     st.header("Detection settings")
-    profile = st.selectbox("Model task", ["Construction PPE", "General objects (COCO)"], index=1)
+    profile = st.selectbox("Model task", ["Construction PPE", "General objects (COCO)"])
     ppe = profile == "Construction PPE"
     backend = st.selectbox("Inference engine", ["PyTorch", "ONNX Runtime"])
     model_path = (
