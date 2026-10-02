@@ -41,6 +41,10 @@ site-held-out data, independent annotation review and group-level uncertainty.
 ![Actual related frames found across original splits](../assets/ppe/leakage_examples.jpg)
 
 Training labels are imbalanced: 1,606 person boxes versus 88 `no_boots` boxes.
+Counts describe raw valid annotation rows. One training image (`image187.jpg`)
+contains one repeated row, which the Ultralytics loader removes. No repeated label
+rows were found in retained validation/test images. The diagnostic is recorded
+in `assets/ppe/label_diagnostics.json`.
 Validation contains only four `no_boots` boxes. The ambiguous upstream `none`
 category is retained to preserve label semantics; it is not interpreted as a
 particular safety condition. Absence of a predicted helmet is not proof that a
@@ -71,7 +75,9 @@ python scripts/evaluate_ppe.py --device 0
 
 CPU training is supported explicitly with `--device cpu` but takes substantially
 longer. The fixed recipe is in `configs/ppe_train.yaml`: COCO-pretrained YOLO11n,
-640 px, batch 8, AdamW, 40 maximum epochs, seed 42 and early stopping patience 12.
+640 px, batch 8, two data-loader workers, AdamW, 40 maximum epochs, seed 42 and
+early stopping patience 12. An initial run with zero workers was stopped after
+validating the runtime; it is not used for checkpoint selection or reported results.
 The best checkpoint is selected by validation mAP50–95, without test evaluation
 during training. Seeded deterministic settings reduce variation; different CUDA,
 library and hardware combinations can still change results. Exact package versions,

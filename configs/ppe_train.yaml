@@ -2,7 +2,7 @@
 epochs: 40
 imgsz: 640
 batch: 8
-workers: 0
+workers: 2
 seed: 42
 deterministic: true
 optimizer: AdamW
