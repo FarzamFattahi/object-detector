@@ -1,3 +1,5 @@
+![Construction PPE — Object detection with PyTorch and ONNX](assets/ppe/banner.png)
+
 # Object Detector
 
 [![Tests and packaging](https://github.com/FarzamFattahi/object-detector/actions/workflows/ci.yml/badge.svg)](https://github.com/FarzamFattahi/object-detector/actions/workflows/ci.yml)
