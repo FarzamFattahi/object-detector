@@ -22,6 +22,7 @@ NAMES = [
     "no_boots",
 ]
 DATASET_URL = "https://github.com/ultralytics/assets/releases/download/v0.0.0/construction-ppe.zip"
+DATASET_SHA256 = "bef8dcb599aa4e9d9f5e602cb6fa7143d3c84d7f6a0ff40463d7f2a4c2632ccc"
 
 
 def read_labels(path: Path) -> np.ndarray:

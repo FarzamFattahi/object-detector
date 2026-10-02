@@ -161,26 +161,32 @@ def person_baseline(data, device):
     images, labels = root / "images/test", root / "labels/test"
     images.mkdir(parents=True, exist_ok=True)
     labels.mkdir(parents=True, exist_ok=True)
+    selected = []
     for line in (data.parent / "test.txt").read_text(encoding="utf-8").splitlines():
         source = Path(line)
         destination = images / source.name
+        selected.append(str(destination.resolve()))
         if not destination.exists():
             try:
                 os.link(source, destination)
             except OSError:
                 shutil.copy2(source, destination)
-        boxes = read_labels(source.parents[2] / "labels/test" / (source.stem + ".txt"))
+        boxes = read_labels(
+            source.parents[2] / "labels" / source.parent.name / (source.stem + ".txt")
+        )
         person = boxes[boxes[:, 0] == 6]
         text = "\n".join("0 " + " ".join(f"{v:.8f}" for v in box[1:]) for box in person)
         (labels / (source.stem + ".txt")).write_text(text, encoding="utf-8")
+    manifest = root / "test.txt"
+    manifest.write_text("\n".join(selected) + "\n", encoding="utf-8")
     config = root / "data.yaml"
     config.write_text(
         yaml.safe_dump(
             {
                 "path": str(root.resolve()),
-                "train": "images/test",
-                "val": "images/test",
-                "test": "images/test",
+                "train": str(manifest.resolve()),
+                "val": str(manifest.resolve()),
+                "test": str(manifest.resolve()),
                 "names": {0: "Person"},
             }
         ),

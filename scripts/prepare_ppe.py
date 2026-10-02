@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path
 
 from object_detector.download import download
-from object_detector.ppe_dataset import DATASET_URL, prepare_dataset
+from object_detector.ppe_dataset import DATASET_SHA256, DATASET_URL, prepare_dataset
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -23,7 +23,9 @@ def main():
         if not archive.exists() or not zipfile.is_zipfile(archive):
             if archive.exists():
                 archive.replace(archive.with_suffix(archive.suffix + ".partial"))
-            download(DATASET_URL, archive)
+            download(DATASET_URL, archive, DATASET_SHA256)
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != DATASET_SHA256:
+            raise ValueError("Archive differs from the pinned Construction-PPE dataset release")
         target = args.root.resolve()
         with zipfile.ZipFile(archive) as bundle:
             for entry in bundle.infolist():
