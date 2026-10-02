@@ -46,6 +46,15 @@ category is retained to preserve label semantics; it is not interpreted as a
 particular safety condition. Absence of a predicted helmet is not proof that a
 person lacks a helmet. This is an equipment detection research demonstration.
 
+At the 640-pixel letterbox resolution, test glove boxes have a median equivalent
+square side of 48.6 px, compared with 281.0 px for people. Ten of the 23 `no_boots`
+boxes have an area equivalent to a square of at most 32 px. These are diagnostic
+size bins at resized inference resolution, not official COCO size metrics. They
+help explain why class support and localization precision need separate inspection;
+they do not prove a causal explanation for any particular prediction error.
+
+![Annotation sizes at 640-pixel resolution](../assets/ppe/box_sizes.png)
+
 ## Reproduce preparation and fine-tuning
 
 Install the project as described in the README, then install a CUDA build of
@@ -55,6 +64,7 @@ PyTorch if training on a compatible NVIDIA GPU:
 python -m pip install torch==2.8.0 torchvision==0.23.0 --index-url https://download.pytorch.org/whl/cu128
 $env:YOLO_CONFIG_DIR = (Get-Location).Path
 python scripts/prepare_ppe.py
+python scripts/analyze_ppe.py
 python scripts/train_ppe.py --device 0
 python scripts/evaluate_ppe.py --device 0
 ```
@@ -67,6 +77,20 @@ during training. Seeded deterministic settings reduce variation; different CUDA,
 library and hardware combinations can still change results. Exact package versions,
 hardware, initial weights, configuration/source hashes and dataset audit hash are
 stored with the experiment evidence.
+
+```mermaid
+flowchart LR
+    A[Pinned dataset archive] --> B[Validate labels and group similar images]
+    B --> C[967 training images]
+    B --> D[129 validation images]
+    B --> E[141 test images]
+    C --> F[Fine-tune pretrained YOLO11n]
+    D --> G[Select checkpoint by validation mAP]
+    F --> G
+    G --> H[Final test evaluation and error analysis]
+    E --> H
+    G --> I[PyTorch and ONNX deployment]
+```
 
 ## Understand the learning process
 

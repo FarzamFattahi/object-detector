@@ -81,7 +81,9 @@ def gallery(records, destination):
             "torch",
         )
         top = 130 + index * 410
-        for column, frame in enumerate((annotate(image, truth), annotate(image, predicted))):
+        for column, frame in enumerate(
+            (annotate(image, truth, show_confidence=False), annotate(image, predicted))
+        ):
             panel = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             panel.thumbnail((680, 330), Image.Resampling.LANCZOS)
             x = 30 + column * 710
