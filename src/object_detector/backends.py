@@ -13,6 +13,7 @@ from .types import Detection
 class TorchBackend:
     def __init__(self, config: DetectorConfig):
         import torch
+
         from ultralytics import YOLO
 
         torch.set_num_threads(config.threads)

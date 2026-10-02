@@ -16,6 +16,7 @@ from PIL import Image, ImageOps
 from object_detector import Detector, DetectorConfig
 from object_detector.annotation import annotate
 from object_detector.media import process_video, read_image
+from object_detector.ppe_dataset import NAMES as PPE_NAMES
 
 ROOT = Path(__file__).resolve().parent
 st.set_page_config(
@@ -56,8 +57,21 @@ st.write(
 
 with st.sidebar:
     st.header("Detection settings")
+    profile = st.selectbox("Model task", ["Construction PPE", "General objects (COCO)"], index=1)
+    ppe = profile == "Construction PPE"
     backend = st.selectbox("Inference engine", ["PyTorch", "ONNX Runtime"])
-    if backend == "ONNX Runtime" and not (ROOT / "models/yolo11n.onnx").is_file():
+    model_path = (
+        ROOT
+        / "models"
+        / (
+            ("ppe-yolo11n.onnx" if backend == "ONNX Runtime" else "ppe-yolo11n.pt")
+            if ppe
+            else "yolo11n.onnx"
+        )
+    )
+    if ppe and not model_path.is_file():
+        st.info("Download the trained PPE model: python scripts/download_ppe_model.py")
+    elif backend == "ONNX Runtime" and not model_path.is_file():
         st.info("Export the ONNX model first: cv-detect export")
     confidence = st.slider("Minimum confidence", 0.05, 0.95, 0.25, 0.05)
     iou = st.slider(
@@ -70,7 +84,9 @@ with st.sidebar:
     )
     selection = st.multiselect(
         "Filter classes",
-        [
+        PPE_NAMES
+        if ppe
+        else [
             "person",
             "bicycle",
             "car",
@@ -84,7 +100,11 @@ with st.sidebar:
             "cell phone",
         ],
     )
-    st.caption("Leave empty to detect all 80 COCO classes.")
+    st.caption(
+        "Leave empty to detect all 11 PPE classes."
+        if ppe
+        else "Leave empty to detect all 80 COCO classes."
+    )
     st.divider()
     st.write("YOLO11 nano · 640 px · CPU")
     st.caption(
@@ -105,12 +125,33 @@ ids = {
     "cell phone": 67,
 }
 config = DetectorConfig(
-    model=str(ROOT / "models/yolo11n.onnx") if backend == "ONNX Runtime" else "yolo11n.pt",
+    model=str(model_path) if ppe or backend == "ONNX Runtime" else "yolo11n.pt",
     backend="onnx" if backend == "ONNX Runtime" else "torch",
     confidence=confidence,
     iou=iou,
-    classes=tuple(ids[name] for name in selection) if selection else None,
+    classes=tuple((PPE_NAMES.index(name) if ppe else ids[name]) for name in selection)
+    if selection
+    else None,
 )
+
+if ppe:
+    st.caption(
+        "Fine-tuned on Construction-PPE. Labels describe model predictions, not verified "
+        "worker compliance. Missing detections do not establish missing equipment."
+    )
+    with st.expander("Dataset experiment and held-out evidence"):
+        metrics_path = ROOT / "assets/ppe/metrics.json"
+        if metrics_path.is_file():
+            measured = json.loads(metrics_path.read_text(encoding="utf-8"))
+            cols = st.columns(3)
+            cols[0].metric("Test mAP50", f"{measured['mAP50']:.1%}")
+            cols[1].metric("Test mAP50–95", f"{measured['mAP50_95']:.1%}")
+            cols[2].metric("Held-out images", measured["dataset"]["splits"]["test"]["images"])
+            st.image(str(ROOT / "assets/ppe/class_performance.png"))
+            st.caption(
+                "Checkpoint selected using validation only. See docs/PPE_CASE_STUDY.md "
+                "for class imbalance, error examples, and evaluation settings."
+            )
 
 mode = st.radio("Input source", ["Image", "Camera snapshot", "Video"], horizontal=True)
 image = None
@@ -118,7 +159,12 @@ video = None
 input_key = None
 if mode == "Image":
     uploaded = st.file_uploader("Upload a photo", type=["jpg", "jpeg", "png", "webp"])
-    example = st.selectbox("Or try an example", ["Street scene", "Two people", "None"])
+    examples = (
+        ["PPE test: strong", "PPE test: median", "PPE test: weak", "None"]
+        if ppe
+        else ["Street scene", "Two people", "None"]
+    )
+    example = st.selectbox("Or try an example", examples)
     if uploaded:
         try:
             pil = ImageOps.exif_transpose(Image.open(uploaded)).convert("RGB")
@@ -129,7 +175,17 @@ if mode == "Image":
         except (OSError, ValueError) as error:
             st.error(f"Cannot read photo: {error}")
     elif example != "None":
-        path = ROOT / "data" / ("bus.jpg" if example == "Street scene" else "zidane.jpg")
+        path = (
+            ROOT
+            / "assets/ppe/samples"
+            / {
+                "PPE test: strong": "test-1.jpg",
+                "PPE test: median": "test-3.jpg",
+                "PPE test: weak": "test-5.jpg",
+            }[example]
+            if ppe
+            else ROOT / "data" / ("bus.jpg" if example == "Street scene" else "zidane.jpg")
+        )
         if path.is_file():
             image = read_image(path)
             input_key = str(path)

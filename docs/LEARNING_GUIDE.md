@@ -143,23 +143,27 @@ These are the portions you should understand and be able to explain in an interv
 
 ## Portfolio description you can defend
 
-“Built an image/video detection application around pretrained YOLO11n. Implemented
+“Fine-tuned YOLO11n on Construction-PPE after auditing labels and filtering related
+frames across dataset splits. Published held-out per-class evaluation, learning curves
+and error examples. Built an image/video detection application and implemented
 an independent ONNX Runtime inference backend with letterboxing, tensor conversion,
 class-aware NMS and coordinate restoration. Added a Streamlit dashboard, streaming
 video/JSONL output, tests and CI. Reproduced CPU latency measurements and compared
 PyTorch/ONNX detection parity on real images and video frames.”
 
 Describe the measured results from this machine rather than promising universal FPS.
-The model can miss small, occluded or out-of-domain objects; detection is not suitable
-for making safety-critical decisions without domain evaluation. GPU and physical
-webcam behavior need to be checked on the intended deployment machine.
+The model can miss small, occluded or out-of-domain objects. The PPE case study
+evaluates one benchmark with heuristic similarity filtering; it does not establish
+unseen-site generalization. Physical webcam behavior needs to be checked on the
+intended deployment machine.
 
 ## Good next steps after this release
 
-1. Collect and label a small dataset relevant to a real use case, with independent
-   train/validation/test splits. Fine-tune and compare to this pretrained baseline.
-2. Evaluate on held-out images using precision/recall and mAP across IoU thresholds.
-   Inspect false positives and false negatives, not just the average score.
+1. Work through [the PPE fine-tuning case study](PPE_CASE_STUDY.md). Trace a YOLO
+   annotation into a minibatch, loss calculation, gradient and optimizer update.
+2. Collect new site-held-out data and review rare/ambiguous labels. Compare frozen
+   backbone and full fine-tuning under equal training budgets on validation, then
+   evaluate the selected recipe once on an independent test set.
 3. Add a tracker if the task needs unique object counts across video frames.
 4. Compare CPU ONNX, CUDA PyTorch and TensorRT under the same benchmark conditions.
 
