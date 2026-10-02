@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 from pathlib import Path
 
 import cv2
@@ -282,6 +283,22 @@ def main():
             "elapsed_seconds": training[-1]["time"],
         },
         "evaluation_environment": environment(),
+        "evaluation_source": {
+            "git_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT)
+            .decode()
+            .strip(),
+            "sha256": {
+                str(path.relative_to(ROOT)).replace("\\", "/"): hashlib.sha256(
+                    path.read_bytes()
+                ).hexdigest()
+                for path in (
+                    Path(__file__),
+                    ROOT / "src/object_detector/evaluation.py",
+                    ROOT / "src/object_detector/backends.py",
+                    ROOT / "src/object_detector/geometry.py",
+                )
+            },
+        },
         "evaluation_settings": {
             "device": args.device,
             "image_size": 640,
@@ -329,6 +346,7 @@ def main():
         DetectorConfig(model=str(weights), device=args.device, confidence=0.25, iou=0.45)
     )
     records = []
+    class_totals = [{"tp": 0, "fp": 0, "fn": 0} for _ in NAMES]
     for line in (args.data.parent / "test.txt").read_text(encoding="utf-8").splitlines():
         path = Path(line)
         image = read_image(path)
@@ -339,6 +357,10 @@ def main():
         ).reshape(-1, 6)
         equipment_truth = truth[~np.isin(truth[:, 0], [5, 6])]
         equipment_preds = preds[~np.isin(preds[:, 0], [5, 6])]
+        for class_id, counts in enumerate(class_totals):
+            matched = match_boxes(truth[truth[:, 0] == class_id], preds[preds[:, 0] == class_id])
+            for key in counts:
+                counts[key] += matched[key]
         records.append(
             {
                 "path": str(path),
@@ -354,6 +376,9 @@ def main():
         "nms_iou": 0.45,
         "match_iou": 0.5,
         **totals,
+        "per_class": [
+            {"class_id": i, "name": NAMES[i], **counts} for i, counts in enumerate(class_totals)
+        ],
     }
     gallery(records, output / "test_gallery.jpg")
     for record in records:
