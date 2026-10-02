@@ -17,6 +17,7 @@ from object_detector import Detector, DetectorConfig
 from object_detector.annotation import annotate
 from object_detector.media import process_video, read_image
 from object_detector.ppe_dataset import NAMES as PPE_NAMES
+from object_detector.types import Detection, Prediction
 
 ROOT = Path(__file__).resolve().parent
 st.set_page_config(
@@ -155,6 +156,7 @@ if ppe:
 
 mode = st.radio("Input source", ["Image", "Camera snapshot", "Video"], horizontal=True)
 image = None
+reference = None
 video = None
 input_key = None
 if mode == "Image":
@@ -189,6 +191,24 @@ if mode == "Image":
         if path.is_file():
             image = read_image(path)
             input_key = str(path)
+            annotation_path = path.with_suffix(".json")
+            if (
+                ppe
+                and annotation_path.is_file()
+                and st.checkbox("Show dataset annotations for this example")
+            ):
+                annotation = json.loads(annotation_path.read_text(encoding="utf-8"))
+                reference = Prediction(
+                    tuple(
+                        Detection(d["class_id"], d["label"], 1.0, tuple(d["xyxy"]))
+                        for d in annotation["detections"]
+                        if config.classes is None or d["class_id"] in config.classes
+                    ),
+                    annotation["width"],
+                    annotation["height"],
+                    0.0,
+                    "dataset reference",
+                )
         else:
             st.info(
                 "Run python scripts/download_samples.py to enable the examples, or upload a photo."
@@ -288,7 +308,12 @@ if result and result["kind"] == "image":
         "First-run timing includes warmup."
     )
     left, right = st.columns(2)
-    left.image(image, channels="BGR", caption="Original image", use_container_width=True)
+    left.image(
+        annotate(image, reference, show_confidence=False) if reference else image,
+        channels="BGR",
+        caption="Dataset annotations" if reference else "Original image",
+        use_container_width=True,
+    )
     right.image(
         result["annotated"], channels="BGR", caption="Detected objects", use_container_width=True
     )

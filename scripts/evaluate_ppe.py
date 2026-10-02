@@ -13,7 +13,6 @@ import matplotlib
 import numpy as np
 import torch
 from PIL import Image, ImageDraw, ImageFont
-
 from ultralytics import YOLO
 
 matplotlib.use("Agg")
@@ -101,7 +100,10 @@ def gallery(records, destination):
         )
         sample = destination.parent / "samples" / f"test-{index + 1}.jpg"
         sample.parent.mkdir(exist_ok=True)
-        cv2.imwrite(str(sample), image)
+        shutil.copy2(path, sample)
+        sample.with_suffix(".json").write_text(
+            json.dumps(truth.to_dict(), indent=2), encoding="utf-8"
+        )
         sources.append(
             {
                 "sample": sample.name,

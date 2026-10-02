@@ -8,9 +8,8 @@ import subprocess
 from pathlib import Path
 
 import torch
-import yaml
-
 import ultralytics
+import yaml
 from ultralytics import YOLO
 
 ROOT = Path(__file__).resolve().parents[1]
