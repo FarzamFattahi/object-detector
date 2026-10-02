@@ -341,6 +341,6 @@ else:
 
 st.divider()
 st.caption(
-    "Pretrained model: Ultralytics YOLO11n. This project implements inference, deployment, "
-    "testing and evaluation; it does not train a new model."
+    "General detector: COCO-pretrained Ultralytics YOLO11n. PPE detector: fine-tuned on "
+    "Construction-PPE. See the case study for data provenance and evaluation limitations."
 )

@@ -122,3 +122,19 @@ def test_detector_rejects_invalid_arrays_without_inference(image):
 def test_prediction_serialization():
     record = Prediction((Detection(0, "person", 0.9, (1, 2, 3, 4)),), 100, 50, 5, "onnx").to_dict()
     assert record["detections"][0]["xyxy"] == (1, 2, 3, 4)
+
+
+def test_ppe_output_uses_eleven_class_scores_and_person_id_six():
+    from object_detector.ppe_dataset import NAMES
+
+    backend = make_backend(classes=(6,))
+    backend.names = dict(enumerate(NAMES))
+    output = np.zeros((1, 15, 2), dtype=np.float32)
+    output[0, :4, :] = np.array([[100, 400], [100, 400], [50, 80], [50, 160]])
+    output[0, 4, 0] = 0.95  # helmet
+    output[0, 4 + 6, 1] = 0.85  # Person
+    backend.session.output = output
+    results = backend.predict(np.zeros((640, 640, 3), dtype=np.uint8))
+    assert len(results) == 1
+    assert (results[0].class_id, results[0].label) == (6, "Person")
+    np.testing.assert_allclose(results[0].xyxy, [360, 320, 440, 480])

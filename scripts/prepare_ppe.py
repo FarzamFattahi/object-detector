@@ -52,7 +52,7 @@ def main():
                     s: {k: v for k, v in r.items() if k != "records"}
                     for s, r in report["splits"].items()
                 },
-                "excluded_duplicates": len(report["excluded"]),
+                "excluded_similar_images": len(report["excluded"]),
             },
             indent=2,
         )

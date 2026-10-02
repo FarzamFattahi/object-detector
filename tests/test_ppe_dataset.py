@@ -5,7 +5,7 @@ import numpy as np
 import pytest
 import yaml
 
-from object_detector.ppe_dataset import prepare_dataset, read_labels
+from object_detector.ppe_dataset import prepare_dataset, read_labels, similarity_groups
 
 
 def fixture_image(root, split, name, pixel, label="0 0.5 0.5 0.4 0.4\n"):
@@ -74,3 +74,11 @@ def test_brightness_variant_of_test_image_is_excluded_from_train(tmp_path):
     assert report["splits"]["train"]["images"] == 1
     assert report["excluded"][0]["reason"] == "pHash group"
     assert report["excluded"][0]["retained_split"] == "test"
+
+
+def test_related_frame_chains_form_one_group_even_when_endpoints_differ():
+    hashes = np.zeros((4, 8), dtype=np.uint8)
+    hashes[1, 0], hashes[2, 0], hashes[3, :] = 15, 255, 255
+    groups = similarity_groups(hashes, 4)
+    assert groups[0] == groups[1] == groups[2]
+    assert groups[3] != groups[0]
