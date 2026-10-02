@@ -48,6 +48,10 @@ streamlit run app.py  # select Construction PPE
 
 ## Try it
 
+On an already installed Windows checkout, double-click **Start Demo.cmd**.
+Follow the [guided local learning session](docs/START_HERE.md) to inspect examples,
+understand the results and trace the code.
+
 Use Python 3.10–3.13; Python 3.12 is the tested local environment. From a fresh clone:
 
 ```powershell
