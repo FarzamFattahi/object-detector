@@ -75,9 +75,11 @@ python scripts/evaluate_ppe.py --device 0
 
 CPU training is supported explicitly with `--device cpu` but takes substantially
 longer. The fixed recipe is in `configs/ppe_train.yaml`: COCO-pretrained YOLO11n,
-640 px, batch 8, two data-loader workers, AdamW, 40 maximum epochs, seed 42 and
-early stopping patience 12. An initial run with zero workers was stopped after
-validating the runtime; it is not used for checkpoint selection or reported results.
+640 px, microbatch 4, two data-loader workers, AdamW, 40 maximum epochs, seed 42 and
+early stopping patience 12. Ultralytics accumulates gradients toward its default
+nominal batch size of 64. Runtime probes with microbatch 8 were stopped due to
+shared GPU memory pressure; they are not used for reported results or checkpoint
+selection. The final recipe was fixed before test evaluation.
 The best checkpoint is selected by validation mAP50–95, without test evaluation
 during training. Seeded deterministic settings reduce variation; different CUDA,
 library and hardware combinations can still change results. Exact package versions,
