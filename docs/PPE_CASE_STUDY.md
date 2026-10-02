@@ -106,6 +106,9 @@ A pretrained detector already has useful edges, textures and shape features.
 Fine-tuning replaces/adapts its 80-class detection head to 11 dataset classes and
 updates the backbone as well. This is transfer learning, not training a new
 architecture from scratch.
+The adapted training model has 2,591,985 parameters. Ultralytics transferred
+448 of 499 state-dictionary entries from the original checkpoint; unmatched
+head entries are initialized for the new class count.
 
 At each minibatch PyTorch builds a computation graph, Ultralytics computes box,
 classification and distribution-focal losses, automatic differentiation produces
@@ -114,6 +117,11 @@ GPU memory usage. Mosaic augmentation combines training images; it is disabled
 for the last ten planned epochs. Validation runs without optimization. Loss falling
 alone does not establish better detection: validation mAP and the error gallery
 show whether learned features transfer to held-out images.
+
+Further reading: [PyTorch autograd](https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html)
+and the [Ultralytics training guide](https://docs.ultralytics.com/modes/train/).
+The experiment pins Ultralytics 8.3.203 and PyTorch 2.8.0 rather than relying on
+the changing defaults of newer releases.
 
 ## Evaluation and evidence
 
