@@ -1,41 +1,40 @@
 # Project 2: Object Detector
 
-**Status:** Complete
-**Updated:** 1 October 2026
+**Status:** Complete · dataset case study added in v1.1.0
+**Updated:** 2 October 2026
 
-## Purpose
+## Purpose and completed work
 
-Deploy pretrained YOLO11n for images, video and an explicitly opened local webcam.
-Learn PyTorch tensors, detection outputs, geometric preprocessing and ONNX deployment.
+General image/video/webcam detection plus a fine-tuned Construction-PPE model.
+The project covers typed prediction records, CLI and Streamlit UI, independent
+ONNX preprocessing/decoding/NMS, dataset auditing, transfer learning, held-out
+evaluation, failure analysis and reproducible evidence.
 
-## Completed
-
-- [x] Package, validated configuration, CLI and Python API
-- [x] PyTorch inference and original-coordinate prediction records
-- [x] Annotations, image directories, video output and frame JSONL
-- [x] Local webcam CLI with Q/Ctrl+C cleanup
-- [x] FP32 static ONNX export
-- [x] Independent ONNX preprocessing, decoding and class-aware NMS
-- [x] Streamlit image/camera-snapshot/video dashboard and downloads
-- [x] Offline tests, packaging and Linux/Windows CI configuration
-- [x] Real outputs, latency chart, parity report and COCO8 smoke evaluation
-- [x] README, evidence provenance and practical learning guide
+The audited split has 967 training, 129 validation and 141 test images. Similarity
+groups stay within one split. Fine-tuning completed 40 epochs on an
+RTX 4050, selecting epoch 38 using validation only.
+All-class test mAP50 is 0.536, mAP50–95 0.272; worn-equipment
+AP50 is 0.807. Rare missing-equipment labels remain weak.
+All per-class scores, test predictions, audit decisions and hashes are published.
 
 ## Validation
 
-37 offline tests passed locally. Real-model checks matched all 32 detections between
-PyTorch and ONNX across two photos and four video frames. CPU median prediction
-latency: 79.6 ms PyTorch, 72.3 ms ONNX, with raw calls in `assets/results.json`.
-60 real video frames processed and encoded successfully. Both dashboard image engines
-and JSON download were exercised in the browser. A 30-frame dashboard video test
-produced a browser-decoded H.264 preview and frame records. Responsive page widths
-were checked at 375, 768, 1024 and 1440 pixels. Physical webcam and CUDA were not tested.
+53 offline tests, lint/format, dependency consistency and packaging pass locally.
+CI covers Linux and Windows on Python 3.10 and 3.12. PPE deployment matches all
+150 detections between PyTorch and ONNX across twenty test images.
+Median warmed CPU prediction: 74.8 ms PyTorch and
+57.7 ms ONNX. CUDA fine-tuning and both PPE dashboard
+engines/reference overlays were exercised. Physical webcam behavior remains untested.
 
-## Repository
+The original v1.0 evidence includes 60 video frames, browser-decoded H.264 preview,
+JSON downloads and responsive widths 375/768/1024/1440. Those measurements remain
+separate from the new PPE test evidence.
 
-[FarzamFattahi/object-detector](https://github.com/FarzamFattahi/object-detector)
+## Repository and learning
 
-[Version 1.0.0](https://github.com/FarzamFattahi/object-detector/releases/tag/v1.0.0)
+[GitHub](https://github.com/FarzamFattahi/object-detector) ·
+[v1.1.0](https://github.com/FarzamFattahi/object-detector/releases/tag/v1.1.0)
 
-Read [README.md](README.md), [learning guide](docs/LEARNING_GUIDE.md) and
-[selection audit](docs/PROJECT_SELECTION.md).
+Read [README](README.md), [dataset experiment](docs/PPE_CASE_STUDY.md),
+[model card](docs/PPE_MODEL_CARD.md), [learning guide](docs/LEARNING_GUIDE.md)
+and [selection audit](docs/PROJECT_SELECTION.md).

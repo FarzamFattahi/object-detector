@@ -1,15 +1,20 @@
 # Understanding and owning this project
 
-This is an inference and deployment project. The learned weights come from Ultralytics;
-the application, ONNX pipeline, geometry, I/O, tests, benchmarks and documentation are
-the work in this repository. Do not describe it as training YOLO from scratch.
+This project combines inference/deployment with a dataset-specific fine-tuning
+experiment. The general detector uses Ultralytics' COCO weights; the PPE detector
+adapts those weights on audited Construction-PPE data. The application, independent
+ONNX pipeline, geometry, I/O, data audit, training/evaluation workflow and evidence
+are implemented here. The architecture is upstream YOLO11, not a new architecture
+trained from scratch. This guide explains inference; the
+[PPE case study](PPE_CASE_STUDY.md) explains training and its measured results.
 
 ## What problem are we solving?
 
 Classification produces one label for an image. Object detection produces a list of
 objects, each with a class, confidence score and rectangle. Segmentation goes further
-and assigns pixels to objects. We solve detection for the 80 classes in the pretrained
-COCO model: people, vehicles, animals and everyday objects.
+and assigns pixels to objects. The general profile detects the 80 pretrained COCO
+classes: people, vehicles, animals and everyday objects. The fine-tuned profile
+predicts eleven construction equipment/person categories, with different class IDs.
 
 The original folder contained a plan and README, but no executable detector. It also
 claimed 30+ CPU FPS without measurements. The implementation now supports images,
@@ -58,7 +63,7 @@ its detection head predicts positions and class scores. The nano variant is a sm
 deployment baseline. No optimizer or backward pass runs during inference. Ultralytics
 handles inference mode for PyTorch; ONNX Runtime executes the exported computation graph.
 
-**4. Decode the output.** For the default 640-pixel YOLO11 detection export, the raw
+**4. Decode the output.** For the 640-pixel COCO YOLO11 detection export, the raw
 tensor is `[1, 84, 8400]`: four coordinates and 80 class scores for each candidate.
 The four coordinates are center x, center y, width and height. Convert them to corners:
 
@@ -106,6 +111,12 @@ not whether the model is right about the world.
   latency samples and video processing statistics.
 - `assets/evaluation.json`: optional tiny COCO8 sanity evaluation. Its images come from
   COCO training data, so its scores are not held-out accuracy or generalization evidence.
+- `assets/ppe/metrics.json`: the full held-out dataset evaluation, class support,
+  Person-only baseline and fixed-threshold errors.
+- `assets/ppe/test_gallery.jpg`: dataset annotations beside selected strong, median
+  and weak predictions; all test records are in `ppe/test_predictions.json`.
+- `assets/ppe/training.csv` and `learning_curves.png`: training/validation progress,
+  kept separate from final testing. Read [the model card](PPE_MODEL_CARD.md) for limits.
 
 Median describes a typical call; p95 exposes slow calls. The prediction benchmark
 includes preprocessing, inference and NMS, but excludes disk I/O and drawing. The video

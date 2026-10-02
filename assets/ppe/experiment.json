@@ -1,0 +1,38 @@
+{
+  "initial_weights": "COCO-pretrained YOLO11n",
+  "initial_sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+  "selection": "best checkpoint by validation fitness (mAP50-95); test unused",
+  "parameters": {
+    "epochs": 40,
+    "imgsz": 640,
+    "batch": 4,
+    "workers": 2,
+    "seed": 42,
+    "deterministic": true,
+    "optimizer": "AdamW",
+    "lr0": 0.001,
+    "lrf": 0.01,
+    "weight_decay": 0.0005,
+    "patience": 12,
+    "close_mosaic": 10,
+    "amp": true,
+    "cache": false,
+    "plots": true
+  },
+  "device": "0",
+  "torch": "2.8.0+cu128",
+  "ultralytics": "8.3.203",
+  "python": "3.12.14",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "cuda": "12.8",
+  "cudnn": 91002,
+  "git_revision": "58844a0ac14ee48c84579a6f88c53a1043c42d42",
+  "audit_sha256": "db56d6baf323eb79d88f918389b09147ef4355611fe05bb58a8fd7acc6daf8ca",
+  "source_sha256": {
+    "scripts/train_ppe.py": "9d98a7adcf78ff851ea5c83f339886c8add8da41ab2e3e322f445bdc27362f38",
+    "configs/ppe_train.yaml": "da72eaa02c32051bf7514d71dc9b103ed8cbac186d64efdfcaa7dffc9668c8f6",
+    "scripts/prepare_ppe.py": "1f5f8a8c48e098310a5018dddde4b5c683da282a01c1aefa086362199094decd",
+    "src/object_detector/ppe_dataset.py": "2535d545c3829df27f695d05f318f347d919ca9439f20af39e2d4f8ca98b1a7d"
+  },
+  "working_tree_dirty": false
+}

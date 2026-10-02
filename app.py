@@ -109,7 +109,12 @@ with st.sidebar:
     st.divider()
     st.write("YOLO11 nano · 640 px · CPU")
     st.caption(
-        "Inference runs on the machine hosting this app. The first PyTorch run downloads weights."
+        "Inference runs on the machine hosting this app. Download PPE models before first use."
+        if ppe
+        else (
+            "Inference runs on the machine hosting this app. "
+            "The first PyTorch run downloads weights."
+        )
     )
 
 ids = {
@@ -211,7 +216,12 @@ if mode == "Image":
                 )
         else:
             st.info(
-                "Run python scripts/download_samples.py to enable the examples, or upload a photo."
+                "PPE examples are unavailable. Upload a photo or restore the included examples."
+                if ppe
+                else (
+                    "Run python scripts/download_samples.py to enable the examples, "
+                    "or upload a photo."
+                )
             )
 elif mode == "Camera snapshot":
     photo = st.camera_input("Take a photo")

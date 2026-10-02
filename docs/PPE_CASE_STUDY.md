@@ -49,6 +49,7 @@ Validation contains only four `no_boots` boxes. The ambiguous upstream `none`
 category is retained to preserve label semantics; it is not interpreted as a
 particular safety condition. Absence of a predicted helmet is not proof that a
 person lacks a helmet. This is an equipment detection research demonstration.
+It does not associate equipment boxes with individual workers or track them over time.
 
 At the 640-pixel letterbox resolution, test glove boxes have a median equivalent
 square side of 48.6 px, compared with 281.0 px for people. Ten of the 23 `no_boots`
@@ -207,6 +208,19 @@ restricted baseline evaluates its person predictions against the same 236 test
 person annotations, mapping COCO ID 0 to PPE ID 6. The report compares this with
 the fine-tuned model's per-class Person AP. Other COCO categories are excluded;
 this is not an eleven-class baseline or a controlled architecture ablation.
+
+The completed run selected epoch 38 of 40. On 141 test images, all-class mAP50
+is **0.536**, mAP50–95 **0.272**. Worn-equipment categories average **0.807 AP50**;
+missing-equipment labels average **0.141**. Person AP50 increases from the COCO
+baseline's **0.719** to **0.831** (AP50–95: **0.301 → 0.521**). Read the
+[model card](PPE_MODEL_CARD.md) for every class, support count and deployment result.
+
+Two examples illustrate concrete errors without changing the model after testing:
+`image1120.jpg` misses both annotated `no_helmet` and `no_goggle` regions.
+`image1125.jpg` produces three unmatched equipment predictions and misses five
+annotated equipment boxes at the declared threshold. The test set includes
+non-construction imagery as well as construction scenes. The category labels
+follow the dataset annotations rather than verifying protective certification.
 
 ![Class counts and held-out AP](../assets/ppe/class_performance.png)
 ![Training loss and validation learning curves](../assets/ppe/learning_curves.png)

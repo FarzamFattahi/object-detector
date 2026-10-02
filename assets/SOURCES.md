@@ -40,6 +40,9 @@ predictions. `ppe/sample_sources.json` records the six included demonstration
 images and their disclosed strong/median/weak selection method. These examples
 are illustrative; the metric report uses all retained test images. All test
 prediction records are published in `ppe/test_predictions.json`.
+`ppe/test_preview.jpg` is the first disclosed strong example from that gallery,
+with the same actual annotations and predictions. `ppe/dashboard.jpg` captures
+the running PPE application with ONNX inference and reference annotations visible.
 
 Class-count, annotation-size and learning plots are computed from the audited
 labels and training/evaluation records. The model architecture and initial COCO

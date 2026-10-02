@@ -22,7 +22,17 @@ fine-tuning, leaving **967 train / 129 validation / 141 test** images. The check
 is selected on validation only. This is image-level evaluation with heuristic
 similarity filtering; it does not establish generalization to unseen sites.
 
-![Dataset audit: related frames across original splits](assets/ppe/leakage_examples.jpg)
+| Held-out test categories | mAP50 | mAP50–95 |
+|---|---:|---:|
+| All 11 (primary result) | 0.536 | 0.272 |
+| Five worn-equipment classes | 0.807 | 0.423 |
+| Four missing-equipment labels | 0.141 | 0.048 |
+
+These are measured on 141 held-out images. Subsets summarize the same model;
+missing-equipment labels remain weak and do not establish worker compliance.
+See the [model card with every class result and baseline](docs/PPE_MODEL_CARD.md).
+
+![Dataset annotations beside actual predictions: selected strong test case](assets/ppe/test_preview.jpg)
 
 Read the [complete experiment and PyTorch training explanation](docs/PPE_CASE_STUDY.md)
 for the recipe, measured per-class results, learning curves, and strong/typical/weak
@@ -36,8 +46,6 @@ cv-detect detect --source assets/ppe/samples/test-1.jpg --model models/ppe-yolo1
 streamlit run app.py  # select Construction PPE
 ```
 
-![Real inputs and actual detected objects](assets/detections.jpg)
-
 ## Try it
 
 Use Python 3.10–3.13; Python 3.12 is the tested local environment. From a fresh clone:
@@ -49,6 +57,7 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install torch==2.8.0 torchvision==0.23.0 --index-url https://download.pytorch.org/whl/cpu
 python -m pip install -r requirements.txt
+python scripts/download_ppe_model.py
 python scripts/download_samples.py --video
 streamlit run app.py
 ```
@@ -139,7 +148,7 @@ ONNX expects our static batch-one FP32 YOLO11 detection export, without embedded
 and with class-name metadata. Use the same `--image-size` as the export.
 Unsupported layouts fail with descriptive errors.
 
-## Measured performance
+## General COCO model: v1.0 CPU measurements
 
 Local Windows CPU run, **AMD Ryzen 7 7435HS**, Python 3.12, YOLO11n FP32,
 640×640 input, batch one, four CPU threads. Two photos alternated over

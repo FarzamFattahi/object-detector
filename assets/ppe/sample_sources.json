@@ -1,0 +1,38 @@
+[
+  {
+    "sample": "test-1.jpg",
+    "dataset_image": "image987.jpg",
+    "sha256": "d4cba8bc6f37a638b282253904bd19164682371a7fcef759a20a707e24b98898",
+    "selection": "equipment F1 excludes Person and ambiguous none; images must have annotated equipment"
+  },
+  {
+    "sample": "test-2.jpg",
+    "dataset_image": "image999.jpg",
+    "sha256": "7a962fbadbf7d1a9e1939741cc85e4615674cb365eb9d25cab2a969057f4124c",
+    "selection": "equipment F1 excludes Person and ambiguous none; images must have annotated equipment"
+  },
+  {
+    "sample": "test-3.jpg",
+    "dataset_image": "image612.jpg",
+    "sha256": "cb5db1a408015bf3f2ed0fcf7a363442150ffdf8aa5367b906578ed151ca7bd8",
+    "selection": "equipment F1 excludes Person and ambiguous none; images must have annotated equipment"
+  },
+  {
+    "sample": "test-4.jpg",
+    "dataset_image": "image923.jpg",
+    "sha256": "4d1a74236ab978ffec14bb333c5ef6aad3fa806f4417bba1a76d14d519222ecb",
+    "selection": "equipment F1 excludes Person and ambiguous none; images must have annotated equipment"
+  },
+  {
+    "sample": "test-5.jpg",
+    "dataset_image": "image1120.jpg",
+    "sha256": "62da23924d7de45be49cf4eecfc8b8aa3a51901e3794320a63e95b13f17b2482",
+    "selection": "equipment F1 excludes Person and ambiguous none; images must have annotated equipment"
+  },
+  {
+    "sample": "test-6.jpg",
+    "dataset_image": "image1125.jpg",
+    "sha256": "ee1a3255b9c4facffddfd09b37d1b837bf383fccb46215685bbf447d83318314",
+    "selection": "equipment F1 excludes Person and ambiguous none; images must have annotated equipment"
+  }
+]
